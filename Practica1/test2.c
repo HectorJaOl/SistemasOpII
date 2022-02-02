@@ -34,6 +34,33 @@ void insertarNodo(string nom,int longitud){
     cabeza = final = nuevo;
   }
 }
+
+void eliminarNodo(string nom){
+  if(!estaVacia()){
+    if(cabeza == final && nom == cabeza->nombre){
+      cabeza = final = NULL;
+    }else if(nom == cabeza->nombre){
+      cabeza = cabeza->sig;
+    }else{
+      Nodo *ant = new Nodo();
+      Nodo *tmp = new Nodo();
+      ant = cabeza;
+      tmp = cabeza->sig;
+
+      while(tmp != NULL && tmp->nombre != nom){
+        ant = ant->sig;
+        tmp = tmp->sig;
+      }
+      if(tmp != NULL){
+        ant->sig = tmp->sig;
+        if(tmp == final){
+          final = ant;
+        }
+      }
+    }
+  }
+}
+
 void mostrarLista(){
   Nodo *aux = cabeza;
 
@@ -41,6 +68,7 @@ void mostrarLista(){
     cout << "[" << aux->nombre << "]->";
     aux = aux->sig;
   }
+  cout << '\n';
 }
 int main(int argc, char const *argv[]) {
   string nom;
@@ -61,6 +89,11 @@ int main(int argc, char const *argv[]) {
         insertarNodo(nom,longitud);
       break;
       case 2:
+        mostrarLista();
+        cout << "Dame el nombre a eliminar: " << '\n';
+        cin >> nom;
+
+        eliminarNodo(nom);
         mostrarLista();
       break;
       case 3:
