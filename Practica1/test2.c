@@ -1,7 +1,11 @@
 //jeje
 #include <iostream>
 #include <string>
+#include <math.h>
 using namespace std;
+
+unsigned int mapa[32];
+
 struct Nodo{
   string nombre;
   //int inicio;
@@ -34,7 +38,6 @@ void insertarNodo(string nom,int longitud){
     cabeza = final = nuevo;
   }
 }
-
 void eliminarNodo(string nom){
   if(!estaVacia()){
     if(cabeza == final && nom == cabeza->nombre){
@@ -60,7 +63,6 @@ void eliminarNodo(string nom){
     }
   }
 }
-
 void mostrarLista(){
   Nodo *aux = cabeza;
 
@@ -70,10 +72,37 @@ void mostrarLista(){
   }
   cout << '\n';
 }
+void vaciarMapaBits(){
+  for (int i = 0; i < 32; i++) {
+    mapa[i]=0;
+  }
+}
+void imprimirMapaBits(int bits){
+    int potencia;
+  for (int i = 0; i < 32 ; i++) {
+    
+  }
+}
+int calcularBits(int kiloByte){
+  int bits=-1,potencia;
+  for(int i=0;i<=31;i++){
+      potencia=pow(2,i);
+      if(kiloByte & potencia){
+          cout<<"1";
+      }else{
+          cout<<"0";
+      }
+      if(kiloByte>=potencia)
+        bits++;
+  }
+  cout<<"\n";
+  return bits;
+}
+
 int main(int argc, char const *argv[]) {
   string nom;
   int longitud, op;
-
+  /*
   do{
     op = menu();
 
@@ -105,5 +134,13 @@ int main(int argc, char const *argv[]) {
     }
 
   }while(op != 3);
+  */
+
+  unsigned int value=15;
+  int i, bits=0;
+  unsigned int potencia;
+  cout<<"Digite un valor: "; cin>>value;
+  cout<<"\n";
+  cout<<"numero de bits: "<<calcularBits(value)<<endl;
   return 0;
 }
