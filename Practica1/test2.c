@@ -1,113 +1,93 @@
+//jeje
 #include <iostream>
 #include <string>
 #include <math.h>
 using namespace std;
-struct Nodo
-{
+
+unsigned int mapa[32];
+
+struct Nodo{
   string nombre;
   //int inicio;
   int tam;
   struct Nodo *sig;
 };
 
-unsigned int mapa[32] = {0};
 Nodo *cabeza = NULL;
 Nodo *final = NULL;
-
-int inicio = 0;
-int tam_memoria = 1024;
-
-int menu()
-{
+int menu(){
   int op;
   cout << "---MENU---" << endl;
-  cout << "1.Agregar proceso" << endl;
+  cout << "1.Agregar proceso"<< endl;
   cout << "2.Eliminar proceso" << endl;
   cout << "3.Salir" << endl;
   cin >> op;
   return op;
 }
-bool estaVacia()
-{
+bool estaVacia(){
   return cabeza == NULL;
 }
-void insertarNodo(string nom, int longitud)
-{
+void insertarNodo(string nom,int longitud){
   Nodo *nuevo = new Nodo();
   nuevo->nombre = nom;
   nuevo->tam = longitud;
-  if (!estaVacia())
-  {
+  if(!estaVacia()){
     final->sig = nuevo;
     final = final->sig;
-  }
-  else
-  {
+  }else{
     cabeza = final = nuevo;
   }
 }
-
-void eliminarNodo(string nom)
-{
-  if (!estaVacia())
-  {
-    if (cabeza == final && nom == cabeza->nombre)
-    {
+void eliminarNodo(string nom){
+  if(!estaVacia()){
+    if(cabeza == final && nom == cabeza->nombre){
       cabeza = final = NULL;
-    }
-    else if (nom == cabeza->nombre)
-    {
+    }else if(nom == cabeza->nombre){
       cabeza = cabeza->sig;
-    }
-    else
-    {
+    }else{
       Nodo *ant = new Nodo();
       Nodo *tmp = new Nodo();
       ant = cabeza;
       tmp = cabeza->sig;
 
-      while (tmp != NULL && tmp->nombre != nom)
-      {
+      while(tmp != NULL && tmp->nombre != nom){
         ant = ant->sig;
         tmp = tmp->sig;
       }
-      if (tmp != NULL)
-      {
+      if(tmp != NULL){
         ant->sig = tmp->sig;
-        if (tmp == final)
-        {
+        if(tmp == final){
           final = ant;
         }
       }
     }
   }
 }
-
-void mostrarLista()
-{
+void mostrarLista(){
   Nodo *aux = cabeza;
 
-  while (aux != NULL)
-  {
+  while(aux != NULL){
     cout << "[" << aux->nombre << "]->";
     aux = aux->sig;
   }
   cout << '\n';
 }
-<<<<<<< HEAD
-int main(int argc, char const *argv[])
-{
-=======
 void vaciarMapaBits(){
   for (int i = 0; i < 32; i++) {
     mapa[i]=0;
   }
 }
-void imprimirMapaBits(int bits){
+void imprimirMapaBits(int numero){
     int potencia;
-  for (int i = 0; i < 32 ; i++) {
-
-  }
+    for(int i=0;i<=31;i++){
+        potencia=pow(2,i);
+        if(numero & potencia){
+            printf("1 ");
+        }
+        else{
+            printf("0 ");
+        }
+    }
 }
 int calcularBits(int kiloByte){// 14= 0111
   int bits=-1,potencia;
@@ -126,101 +106,78 @@ int calcularBits(int kiloByte){// 14= 0111
 }
 
 int main(int argc, char const *argv[]) {
->>>>>>> 1cd7d4be19ac9f158662eb1a6d62cf54e10045bf
   string nom;
-  int longitud, op, i = 0,j, k = 0, aux;
-  unsigned int value,potencia,suma, suma1 = 0;
-
-  do
-  {
+  int longitud, op;
+  /*
+  do{
     op = menu();
 
-    switch (op)
-    {
-    case 1:
-      cout << "Dame el nombre: " << '\n';
-      cin >> nom;
-      cout << "Dame la longitud (EN BYTES): " << '\n';
-      cin >> longitud;
+    switch (op) {
+      case 1:
+        cout << "Dame el nombre: " << '\n';
+        cin >> nom;
+        cout << "Dame la longitud (EN BYTES): "<<'\n';
+        cin >> longitud;
 
-      longitud = longitud / 1024;
-      if (longitud > tam_memoria)
-      {
-        cout << "Proceso muy grande para la memoria" << endl;
-      }
-      else
-      {
-        aux = inicio;
-        inicio = inicio + longitud;
-        tam_memoria = tam_memoria - longitud;
-        suma = 0;
-        cout << "Inicio:" <<inicio<<endl;
-        cout << "Aux: "<<aux<<endl;
-					for(i = aux; i < inicio; i++){
-            suma += pow(2,i);
-          }
-          mapa[k] = mapa[k] + suma;
-
-        insertarNodo(nom, longitud);
+        longitud = longitud / 1024;
+        cout << "Longitud en kb: " << longitud << endl;
+        insertarNodo(nom,longitud);
+      break;
+      case 2:
         mostrarLista();
-        for(i=0;i<32;i++){
-					value=mapa[i];
-					for(j=0;j<32;j++){
-						potencia=pow(2,j);
-						if(value & potencia){
-						printf("1 ");
-						}
-						else{
-							printf("0 ");
-						}
-					}
-					printf("\n");
-			  }
-      }
+        cout << "Dame el nombre a eliminar: " << '\n';
+        cin >> nom;
 
+        eliminarNodo(nom);
+        mostrarLista();
       break;
-    case 2:
-      mostrarLista();
-      cout << "Dame el nombre a eliminar: " << '\n';
-      cin >> nom;
-
-      eliminarNodo(nom);
-      mostrarLista();
+      case 3:
+        cout << "Görüşürüz!" <<endl;
       break;
-    case 3:
-      cout << "Görüşürüz!" << endl;
-      break;
-    default:
-      cout << "Opcion incorrecta" << endl;
+      default:
+        cout << "Opcion incorrecta" << endl;
       break;
     }
 
-<<<<<<< HEAD
-  } while (op != 3);
-=======
   }while(op != 3);
   */
 
   unsigned int value;
 
-  int i, bits=0, auxbits, contador;
+  int i, bits=0, auxbits, contador=0, j=0, fila=0;
   unsigned int potencia=0;
   vaciarMapaBits();
-  cout<<"Digite un valor: "; cin>>value;
-  cout<<"\n";
-  //auxbits = calcularBits(value);
-  //cout<<"numero de bits: "<<auxbits<<endl;
-  cout<<"Hola"<<endl;
-  for (int i = 0; i < 32; i++){
-    if(i<value){
-      potencia=pow(2,i);
-      mapa[0]+=potencia;
-      cout<<"1 ";
-    }else
-      cout<<"0 ";
+  do{
+    //system("clear");
+    cout<<"\nDigite un valor: "; cin>>value;
+    cout<<"\n";
+    //auxbits = calcularBits(value);
+    //cout<<"numero de bits: "<<auxbits<<endl;
+    cout<<"Hola"<<endl;
 
-  }
-  cout<<"\nmapa---"<<mapa[0]<<endl;
->>>>>>> 1cd7d4be19ac9f158662eb1a6d62cf54e10045bf
+    for (i = 0; i < value; i++){
+      potencia=pow(2,j);
+      mapa[fila]+=potencia;
+      //cout<<"\nmapa---"<<mapa[0]<<endl;
+      j++;
+      //cout<<"J: "<<j<<endl;
+      if(j>=32){
+        fila++;
+        j=0;
+      }
+    }
+
+
+    for (int i = 0; i < 32; i++) {
+      imprimirMapaBits(mapa[i]);
+      cout<<"\n";
+    }
+
+  }while(fila!=32);
+
+
+
+
+
   return 0;
 }
