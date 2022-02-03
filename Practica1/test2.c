@@ -89,10 +89,10 @@ void imprimirMapaBits(int numero){
         }
     }
 }
-int calcularBits(int kiloByte){// 14= 0111
+int calcularBits(int kiloByte){
   int bits=-1,potencia;
   for(int i=0;i<32;i++){
-      potencia=pow(2,i); // 1-2-4-8-16-32-64-128-...-2^32
+      potencia=pow(2,i);
       if(kiloByte & potencia){
           cout<<"1";
       }else{
