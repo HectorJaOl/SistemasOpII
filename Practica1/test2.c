@@ -80,13 +80,13 @@ void vaciarMapaBits(){
 void imprimirMapaBits(int bits){
     int potencia;
   for (int i = 0; i < 32 ; i++) {
-    
+
   }
 }
-int calcularBits(int kiloByte){
+int calcularBits(int kiloByte){// 14= 0111
   int bits=-1,potencia;
-  for(int i=0;i<=31;i++){
-      potencia=pow(2,i);
+  for(int i=0;i<32;i++){
+      potencia=pow(2,i); // 1-2-4-8-16-32-64-128-...-2^32
       if(kiloByte & potencia){
           cout<<"1";
       }else{
@@ -136,11 +136,25 @@ int main(int argc, char const *argv[]) {
   }while(op != 3);
   */
 
-  unsigned int value=15;
-  int i, bits=0;
-  unsigned int potencia;
+  unsigned int value;
+
+  int i, bits=0, auxbits, contador;
+  unsigned int potencia=0;
+  vaciarMapaBits();
   cout<<"Digite un valor: "; cin>>value;
   cout<<"\n";
-  cout<<"numero de bits: "<<calcularBits(value)<<endl;
+  //auxbits = calcularBits(value);
+  //cout<<"numero de bits: "<<auxbits<<endl;
+  cout<<"Hola"<<endl;
+  for (int i = 0; i < 32; i++){
+    if(i<value){
+      potencia=pow(2,i);
+      mapa[0]+=potencia;
+      cout<<"1 ";
+    }else
+      cout<<"0 ";
+
+  }
+  cout<<"\nmapa---"<<mapa[0]<<endl;
   return 0;
 }
