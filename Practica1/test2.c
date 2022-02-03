@@ -8,13 +8,19 @@ unsigned int mapa[32];
 
 struct Nodo{
   string nombre;
-  //int inicio;
+  int inicio;
+  int fila;
   int tam;
   struct Nodo *sig;
 };
 
 Nodo *cabeza = NULL;
 Nodo *final = NULL;
+
+int posicion_mapa = 0;
+int tam_memoria = 1024;
+
+
 int menu(){
   int op;
   cout << "---MENU---" << endl;
@@ -24,12 +30,16 @@ int menu(){
   cin >> op;
   return op;
 }
+
 bool estaVacia(){
   return cabeza == NULL;
 }
-void insertarNodo(string nom,int longitud){
+
+void insertarNodo(string nom,int inicio,int fila,int longitud){
   Nodo *nuevo = new Nodo();
   nuevo->nombre = nom;
+  nuevo->inicio = inicio;
+  nuevo->fila = fila;
   nuevo->tam = longitud;
   if(!estaVacia()){
     final->sig = nuevo;
@@ -38,6 +48,7 @@ void insertarNodo(string nom,int longitud){
     cabeza = final = nuevo;
   }
 }
+
 void eliminarNodo(string nom){
   if(!estaVacia()){
     if(cabeza == final && nom == cabeza->nombre){
@@ -63,20 +74,24 @@ void eliminarNodo(string nom){
     }
   }
 }
+
 void mostrarLista(){
+  cout << "Nombre | Inicio | Fila | Tamano" << endl;
   Nodo *aux = cabeza;
 
   while(aux != NULL){
-    cout << "[" << aux->nombre << "]->";
+    cout << "[" << aux->nombre << "|"<< aux->inicio << "|" << aux->fila << "|" << aux->tam <<"]->";
     aux = aux->sig;
   }
   cout << '\n';
 }
+
 void vaciarMapaBits(){
   for (int i = 0; i < 32; i++) {
     mapa[i]=0;
   }
 }
+
 void imprimirMapaBits(int numero){
     int potencia;
     for(int i=0;i<=31;i++){
@@ -89,6 +104,7 @@ void imprimirMapaBits(int numero){
         }
     }
 }
+
 int calcularBits(int kiloByte){// 14= 0111
   int bits=-1,potencia;
   for(int i=0;i<32;i++){
@@ -124,35 +140,36 @@ int main(int argc, char const *argv[]) {
         cin >> longitud;
 
         longitud = longitud / 1024;
-        cout << "Longitud en kb: " << longitud << endl;
-        insertarNodo(nom,longitud);
+        //cout << "Longitud en kb: " << longitud << endl;
 
-        for (i = 0; i < longitud; i++){
-          potencia=pow(2,j);
-          mapa[fila]+=potencia;
-          //cout<<"\nmapa---"<<mapa[0]<<endl;
-          j++;
-          //cout<<"J: "<<j<<endl;
-          if(j>=32){
-            fila++;
-            j=0;
+        if(longitud <= tam_memoria){
+          tam_memoria -= longitud;
+          for (i = 0; i < longitud; i++){
+            potencia=pow(2,j);
+            mapa[fila]+=potencia;
+            //cout<<"\nmapa---"<<mapa[0]<<endl;
+            j++;
+            //cout<<"J: "<<j<<endl;
+            if(j>=32){
+              fila++;
+              j=0;
+            }
           }
-        }
-        for (int i = 0; i < 32; i++) {
-          imprimirMapaBits(mapa[i]);
-          cout<<"\n";
+          insertarNodo(nom,posicion_mapa,j,longitud);
+          posicion_mapa += longitud;
+          for (int i = 0; i < 32; i++) {
+            imprimirMapaBits(mapa[i]);
+            cout<<"\n";
+          }
+        }else{
+          cout << "\nMemoria llena\n" << endl;
         }
       break;
       case 2:
         mostrarLista();
-        cout << "Dame el nombre a eliminar: " << '\n';
-        cin >> nom;
-
-        eliminarNodo(nom);
-        mostrarLista();
       break;
       case 3:
-        cout << "Görüşürüz!" <<endl;
+        cout << "Adios" <<endl;
       break;
       default:
         cout << "Opcion incorrecta" << endl;
@@ -160,16 +177,5 @@ int main(int argc, char const *argv[]) {
     }
 
   }while(op != 3);
-
-/*
-  do{
-
-
-  }while(fila!=32);
-*/
-
-
-
-
   return 0;
 }
