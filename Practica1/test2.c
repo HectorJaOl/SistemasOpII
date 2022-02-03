@@ -94,8 +94,39 @@ void mostrarLista()
   }
   cout << '\n';
 }
+<<<<<<< HEAD
 int main(int argc, char const *argv[])
 {
+=======
+void vaciarMapaBits(){
+  for (int i = 0; i < 32; i++) {
+    mapa[i]=0;
+  }
+}
+void imprimirMapaBits(int bits){
+    int potencia;
+  for (int i = 0; i < 32 ; i++) {
+
+  }
+}
+int calcularBits(int kiloByte){// 14= 0111
+  int bits=-1,potencia;
+  for(int i=0;i<32;i++){
+      potencia=pow(2,i); // 1-2-4-8-16-32-64-128-...-2^32
+      if(kiloByte & potencia){
+          cout<<"1";
+      }else{
+          cout<<"0";
+      }
+      if(kiloByte>=potencia)
+        bits++;
+  }
+  cout<<"\n";
+  return bits;
+}
+
+int main(int argc, char const *argv[]) {
+>>>>>>> 1cd7d4be19ac9f158662eb1a6d62cf54e10045bf
   string nom;
   int longitud, op, i = 0,j, k = 0, aux;
   unsigned int value,potencia,suma, suma1 = 0;
@@ -164,6 +195,32 @@ int main(int argc, char const *argv[])
       break;
     }
 
+<<<<<<< HEAD
   } while (op != 3);
+=======
+  }while(op != 3);
+  */
+
+  unsigned int value;
+
+  int i, bits=0, auxbits, contador;
+  unsigned int potencia=0;
+  vaciarMapaBits();
+  cout<<"Digite un valor: "; cin>>value;
+  cout<<"\n";
+  //auxbits = calcularBits(value);
+  //cout<<"numero de bits: "<<auxbits<<endl;
+  cout<<"Hola"<<endl;
+  for (int i = 0; i < 32; i++){
+    if(i<value){
+      potencia=pow(2,i);
+      mapa[0]+=potencia;
+      cout<<"1 ";
+    }else
+      cout<<"0 ";
+
+  }
+  cout<<"\nmapa---"<<mapa[0]<<endl;
+>>>>>>> 1cd7d4be19ac9f158662eb1a6d62cf54e10045bf
   return 0;
 }
