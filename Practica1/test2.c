@@ -108,7 +108,11 @@ int calcularBits(int kiloByte){// 14= 0111
 int main(int argc, char const *argv[]) {
   string nom;
   int longitud, op;
-  /*
+  unsigned int value;
+  int i, bits=0, auxbits, contador=0, j=0, fila=0;
+  unsigned int potencia=0;
+  vaciarMapaBits();
+
   do{
     op = menu();
 
@@ -122,6 +126,22 @@ int main(int argc, char const *argv[]) {
         longitud = longitud / 1024;
         cout << "Longitud en kb: " << longitud << endl;
         insertarNodo(nom,longitud);
+
+        for (i = 0; i < longitud; i++){
+          potencia=pow(2,j);
+          mapa[fila]+=potencia;
+          //cout<<"\nmapa---"<<mapa[0]<<endl;
+          j++;
+          //cout<<"J: "<<j<<endl;
+          if(j>=32){
+            fila++;
+            j=0;
+          }
+        }
+        for (int i = 0; i < 32; i++) {
+          imprimirMapaBits(mapa[i]);
+          cout<<"\n";
+        }
       break;
       case 2:
         mostrarLista();
@@ -140,41 +160,13 @@ int main(int argc, char const *argv[]) {
     }
 
   }while(op != 3);
-  */
 
-  unsigned int value;
-
-  int i, bits=0, auxbits, contador=0, j=0, fila=0;
-  unsigned int potencia=0;
-  vaciarMapaBits();
+/*
   do{
-    //system("clear");
-    cout<<"\nDigite un valor: "; cin>>value;
-    cout<<"\n";
-    //auxbits = calcularBits(value);
-    //cout<<"numero de bits: "<<auxbits<<endl;
-    cout<<"Hola"<<endl;
 
-    for (i = 0; i < value; i++){
-      potencia=pow(2,j);
-      mapa[fila]+=potencia;
-      //cout<<"\nmapa---"<<mapa[0]<<endl;
-      j++;
-      //cout<<"J: "<<j<<endl;
-      if(j>=32){
-        fila++;
-        j=0;
-      }
-    }
-
-
-    for (int i = 0; i < 32; i++) {
-      imprimirMapaBits(mapa[i]);
-      cout<<"\n";
-    }
 
   }while(fila!=32);
-
+*/
 
 
 
