@@ -119,6 +119,7 @@ void insertarNodo(string nom,int inicio,int fila,int longitud){
 }
 
 void eliminarNodo(string nom){
+  int k, potencia, f;
   if(!estaVacia()){
     if(cabeza == final && nom == cabeza->nombre){ //unico nodo
       cout <<"i: "<< cabeza->inicio << "f: " << cabeza->fila <<endl;
@@ -129,19 +130,16 @@ void eliminarNodo(string nom){
       cout <<"i: "<<cabeza->inicio<< "f: " << cabeza->fila <<endl;
       
       //Intentamos eliminar, Prueba1
-      
-      int k=cabeza->inicio, potencia, f=cabeza->fila;
+      k=cabeza->inicio;
+      f=cabeza->fila;
       for (int i = 0; i < cabeza->tam; i++){
         potencia=pow(2,k);
         mapa[f]-=potencia;
-        //cout<<"\nmapa---"<<mapa[0]<<endl;
         k++;
-        //cout<<"J: "<<j<<endl;
         if(k>=32){
           f++;
           k=0;
         }
-        //2cout << "FILA: " << fila <<endl;1
       }
 
      
@@ -161,6 +159,23 @@ void eliminarNodo(string nom){
       if(tmp != NULL){
         cout <<"i: "<< tmp->inicio << "f: " << tmp->fila <<endl;
         cout << tmp->inicio;
+        cout<<"ORALE PRRO, A ELIMINARRR!!"<<endl;
+        //Intentamos eliminar, Prueba2 pero mas pro B)
+    
+        k=tmp->inicio;
+        f=tmp->fila;
+        for (int i = 0; i < tmp->tam; i++){
+          potencia=pow(2,k);
+          mapa[f]-=potencia;
+          k++;
+          if(k>=32){
+            f++;
+            k=0;
+          }
+        }
+ 
+        //aqui termina la prueba :V
+
         ant->sig = tmp->sig;
         if(tmp == final){
           final = ant;
