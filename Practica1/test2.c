@@ -1,10 +1,18 @@
-//jeje
+/*EQUIPO 6
+
+INTEGRANTES:
+
+201907066 Cilia Romero Jimena Paola
+201917480 Flores Santos Alejandra
+201938593 Javier Olivares Hector
+201918749 Ramirez Xochipa David Uriel
+
+*/
+
 #include <iostream>
 #include <string>
 #include <math.h>
 using namespace std;
-
-
 
 struct Nodo{
   string nombre;
@@ -17,7 +25,6 @@ struct Nodo{
 Nodo *cabeza = NULL;
 Nodo *final = NULL;
 
-int posicion_mapa = 0;
 int tam_memoria = 1024;
 unsigned int mapa[32];
 int fila = 0, j=0;
@@ -73,32 +80,13 @@ void insertarProceso(int longitud){
   for (int i = 0; i < longitud; i++){
     potencia=pow(2,j);
     mapa[fila]+=potencia;
-    //cout<<"\nmapa---"<<mapa[0]<<endl;
     j++;
-    //cout<<"J: "<<j<<endl;
     if(j>=32){
       fila++;
       j=0;
     }
-    //2cout << "FILA: " << fila <<endl;1
   }
 }
-/*
-void eliminarProceso(int longitud, int fila, int j){
-  int potencia;
-  for (int i = 0; i < longitud; i++){
-    potencia=pow(2,j);
-    mapa[fila]+=potencia;
-    //cout<<"\nmapa---"<<mapa[0]<<endl;
-    j++;
-    //cout<<"J: "<<j<<endl;
-    if(j>=32){
-      fila++;
-      j=0;
-    }
-    //2cout << "FILA: " << fila <<endl;1
-  }
-}*/
 
 bool estaVacia(){
   return cabeza == NULL;
@@ -120,16 +108,17 @@ void insertarNodo(string nom,int inicio,int fila,int longitud){
 
 void eliminarNodo(string nom){
   int k, potencia, f;
+  Nodo *ant = new Nodo();
+  ant = cabeza;
   if(!estaVacia()){
     if(cabeza == final && nom == cabeza->nombre){ //unico nodo
       cout <<"i: "<< cabeza->inicio << "f: " << cabeza->fila <<endl;
       cabeza = final = NULL;
+      delete ant;
       vaciarMapaBits();
+      j = 0;
+      fila = 0;
     }else if(nom == cabeza->nombre){ //elemento del inicio
-      cout<<"ESTA EN EL INICIO!!"<<endl;
-      cout <<"i: "<<cabeza->inicio<< "f: " << cabeza->fila <<endl;
-      
-      //Intentamos eliminar, Prueba1
       k=cabeza->inicio;
       f=cabeza->fila;
       for (int i = 0; i < cabeza->tam; i++){
@@ -142,14 +131,10 @@ void eliminarNodo(string nom){
         }
       }
 
-     
-      //aqui termina la prueba :V
-     
       cabeza = cabeza->sig;
+      delete ant;
     }else{ //mas elementos
-      Nodo *ant = new Nodo();
       Nodo *tmp = new Nodo();
-      ant = cabeza;
       tmp = cabeza->sig;
 
       while(tmp != NULL && tmp->nombre != nom){
@@ -157,10 +142,6 @@ void eliminarNodo(string nom){
         tmp = tmp->sig;
       }
       if(tmp != NULL){
-        cout <<"i: "<< tmp->inicio << "f: " << tmp->fila <<endl;
-        cout << tmp->inicio;
-        cout<<"ORALE PRRO, A ELIMINARRR!!"<<endl;
-        //Intentamos eliminar, Prueba2 pero mas pro B)
     
         k=tmp->inicio;
         f=tmp->fila;
@@ -173,13 +154,12 @@ void eliminarNodo(string nom){
             k=0;
           }
         }
- 
-        //aqui termina la prueba :V
-
         ant->sig = tmp->sig;
+        
         if(tmp == final){
           final = ant;
         }
+        delete tmp;
       }
     }
   }
@@ -210,14 +190,13 @@ int main(int argc, char const *argv[]) {
 
     switch (op) {
       case 1:
-        mostrarLista();
-        cout << "Dame el nombre: " << '\n';
+        cout << "\nDame el nombre: " << '\n';
         cin >> nom;
-        cout << "Dame la longitud (EN BYTES): "<<'\n';
+        cout << "\nDame la longitud (EN BYTES): "<<'\n';
         cin >> longitud;
 
         longitud = longitud / 1024;
-        //cout << "Longitud en kb: " << longitud << endl;
+        cout << "\nLongitud en kb: " << longitud << endl;
         
         if(longitud <= tam_memoria){
           tam_memoria -= longitud;
@@ -230,8 +209,10 @@ int main(int argc, char const *argv[]) {
             imprimirMapaBits(mapa[i]);
             cout<<"\n";
           }
-        }else{
+        }else if(tam_memoria == 0){
           cout << "\nMemoria llena\n" << endl;
+        }else{
+          cout << "\nProceso demasiado grande\n" << endl;
         }
       break;
       case 2:
@@ -245,7 +226,7 @@ int main(int argc, char const *argv[]) {
         }
       break;
       case 3:
-        cout << "Adios" <<endl;
+        cout << "\nAdios\n" <<endl;
       break;
       default:
         cout << "Opcion incorrecta" << endl;
