@@ -4,7 +4,7 @@
 #include <math.h>
 using namespace std;
 
-unsigned int mapa[32];
+
 
 struct Nodo{
   string nombre;
@@ -19,6 +19,9 @@ Nodo *final = NULL;
 
 int posicion_mapa = 0;
 int tam_memoria = 1024;
+unsigned int mapa[32];
+int fila = 0, j=0;
+
 
 
 int menu(){
@@ -30,6 +33,72 @@ int menu(){
   cin >> op;
   return op;
 }
+void vaciarMapaBits(){
+  for (int i = 0; i < 32; i++) {
+    mapa[i]=0;
+  }
+}
+
+void imprimirMapaBits(int numero){
+    int potencia;
+    for(int i=0;i<=31;i++){
+        potencia=pow(2,i);
+        if(numero & potencia){
+            printf("1 ");
+        }
+        else{
+            printf("0 ");
+        }
+    }
+}
+
+int calcularBits(int kiloByte){// 14= 0111
+  int bits=-1,potencia;
+  for(int i=0;i<32;i++){
+      potencia=pow(2,i); // 1-2-4-8-16-32-64-128-...-2^32
+      if(kiloByte & potencia){
+          cout<<"1";
+      }else{
+          cout<<"0";
+      }
+      if(kiloByte>=potencia)
+        bits++;
+  }
+  cout<<"\n";
+  return bits;
+}
+
+void insertarProceso(int longitud){
+  int potencia;
+  for (int i = 0; i < longitud; i++){
+    potencia=pow(2,j);
+    mapa[fila]+=potencia;
+    //cout<<"\nmapa---"<<mapa[0]<<endl;
+    j++;
+    //cout<<"J: "<<j<<endl;
+    if(j>=32){
+      fila++;
+      j=0;
+    }
+    //2cout << "FILA: " << fila <<endl;1
+  }
+}
+/*
+void eliminarProceso(int longitud, int fila, int j){
+  int potencia;
+  for (int i = 0; i < longitud; i++){
+    potencia=pow(2,j);
+    mapa[fila]+=potencia;
+    //cout<<"\nmapa---"<<mapa[0]<<endl;
+    j++;
+    //cout<<"J: "<<j<<endl;
+    if(j>=32){
+      fila++;
+      j=0;
+    }
+    //2cout << "FILA: " << fila <<endl;1
+  }
+}*/
 
 bool estaVacia(){
   return cabeza == NULL;
@@ -51,11 +120,35 @@ void insertarNodo(string nom,int inicio,int fila,int longitud){
 
 void eliminarNodo(string nom){
   if(!estaVacia()){
-    if(cabeza == final && nom == cabeza->nombre){
+    if(cabeza == final && nom == cabeza->nombre){ //unico nodo
+      cout <<"i: "<< cabeza->inicio << "f: " << cabeza->fila <<endl;
       cabeza = final = NULL;
-    }else if(nom == cabeza->nombre){
+      vaciarMapaBits();
+    }else if(nom == cabeza->nombre){ //elemento del inicio
+      cout<<"ESTA EN EL INICIO!!"<<endl;
+      cout <<"i: "<<cabeza->inicio<< "f: " << cabeza->fila <<endl;
+      
+      //Intentamos eliminar, Prueba1
+      
+      int k=cabeza->inicio, potencia, f=cabeza->fila;
+      for (int i = 0; i < cabeza->tam; i++){
+        potencia=pow(2,k);
+        mapa[f]-=potencia;
+        //cout<<"\nmapa---"<<mapa[0]<<endl;
+        k++;
+        //cout<<"J: "<<j<<endl;
+        if(k>=32){
+          f++;
+          k=0;
+        }
+        //2cout << "FILA: " << fila <<endl;1
+      }
+
+     
+      //aqui termina la prueba :V
+     
       cabeza = cabeza->sig;
-    }else{
+    }else{ //mas elementos
       Nodo *ant = new Nodo();
       Nodo *tmp = new Nodo();
       ant = cabeza;
@@ -66,6 +159,8 @@ void eliminarNodo(string nom){
         tmp = tmp->sig;
       }
       if(tmp != NULL){
+        cout <<"i: "<< tmp->inicio << "f: " << tmp->fila <<endl;
+        cout << tmp->inicio;
         ant->sig = tmp->sig;
         if(tmp == final){
           final = ant;
@@ -86,50 +181,12 @@ void mostrarLista(){
   cout << '\n';
 }
 
-void vaciarMapaBits(){
-  for (int i = 0; i < 32; i++) {
-    mapa[i]=0;
-  }
-}
-
-void imprimirMapaBits(int numero){
-    int potencia;
-    for(int i=0;i<=31;i++){
-        potencia=pow(2,i);
-        if(numero & potencia){
-            printf("1 ");
-        }
-        else{
-            printf("0 ");
-        }
-    }
-}
-<<<<<<< HEAD
-int calcularBits(int kiloByte){
-=======
-
-int calcularBits(int kiloByte){// 14= 0111
->>>>>>> a64911d7710cfde3598c68682aa287f03327faef
-  int bits=-1,potencia;
-  for(int i=0;i<32;i++){
-      potencia=pow(2,i);
-      if(kiloByte & potencia){
-          cout<<"1";
-      }else{
-          cout<<"0";
-      }
-      if(kiloByte>=potencia)
-        bits++;
-  }
-  cout<<"\n";
-  return bits;
-}
 
 int main(int argc, char const *argv[]) {
   string nom;
   int longitud, op;
   unsigned int value;
-  int i, bits=0, auxbits, contador=0, j=0, fila=0;
+  int i, bits=0, auxbits, contador=0;
   unsigned int potencia=0;
   vaciarMapaBits();
 
@@ -138,6 +195,7 @@ int main(int argc, char const *argv[]) {
 
     switch (op) {
       case 1:
+        mostrarLista();
         cout << "Dame el nombre: " << '\n';
         cin >> nom;
         cout << "Dame la longitud (EN BYTES): "<<'\n';
@@ -145,22 +203,14 @@ int main(int argc, char const *argv[]) {
 
         longitud = longitud / 1024;
         //cout << "Longitud en kb: " << longitud << endl;
-
+        
         if(longitud <= tam_memoria){
           tam_memoria -= longitud;
-          for (i = 0; i < longitud; i++){
-            potencia=pow(2,j);
-            mapa[fila]+=potencia;
-            //cout<<"\nmapa---"<<mapa[0]<<endl;
-            j++;
-            //cout<<"J: "<<j<<endl;
-            if(j>=32){
-              fila++;
-              j=0;
-            }
-          }
-          insertarNodo(nom,posicion_mapa,j,longitud);
-          posicion_mapa += longitud;
+
+          insertarNodo(nom,j,fila,longitud);
+
+          insertarProceso(longitud);
+                    
           for (int i = 0; i < 32; i++) {
             imprimirMapaBits(mapa[i]);
             cout<<"\n";
@@ -171,6 +221,13 @@ int main(int argc, char const *argv[]) {
       break;
       case 2:
         mostrarLista();
+        cout<< "Escriba el nombre del proceso a eliminar: ";
+        cin>>nom;
+        eliminarNodo(nom);
+        for (int i = 0; i < 32; i++) {
+          imprimirMapaBits(mapa[i]);
+          cout<<"\n";
+        }
       break;
       case 3:
         cout << "Adios" <<endl;
@@ -182,4 +239,4 @@ int main(int argc, char const *argv[]) {
 
   }while(op != 3);
   return 0;
-}
+} 
