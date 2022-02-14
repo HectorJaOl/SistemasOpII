@@ -48,7 +48,7 @@ void vaciarMapaBits(){
 
 void imprimirMapaBits(int numero){
     int potencia;
-    for(int i=0;i<=31;i++){
+    for(int i=0;i<32;i++){
         potencia=pow(2,i);
         if(numero & potencia){
             printf("1 ");
@@ -57,6 +57,28 @@ void imprimirMapaBits(int numero){
             printf("0 ");
         }
     }
+}
+
+int buscarEspacio(int tam){
+    int potencia, contador=0, pos=0;
+    for (int l = 0; l < 32; l++){
+      for(int i=0;i<32;i++){
+        potencia=pow(2,i);
+        if(mapa[l] & potencia){
+            contador = 0;
+            
+        }
+        else{
+            contador++;
+        }
+        pos++;
+        if(contador==tam){
+            return pos-tam;
+          break;
+        }
+      }  
+    }
+    return -1;
 }
 
 int calcularBits(int kiloByte){// 14= 0111
@@ -84,6 +106,19 @@ void insertarProceso(int longitud){
     if(j>=32){
       fila++;
       j=0;
+    }
+  }
+}
+
+void insertarProceso2(int longitud, int posicion){
+  int potencia;
+  for (int i = 0; i < longitud; i++){
+    potencia=pow(2,j);
+    mapa[fila]+=potencia;
+    posicion++;
+    if(posicion>=32){
+      fila++;
+      posicion=0;
     }
   }
 }
@@ -202,7 +237,9 @@ int main(int argc, char const *argv[]) {
           tam_memoria -= longitud;
 
           insertarNodo(nom,j,fila,longitud);
-
+          if(buscarEspacio(longitud)>=0){
+            insertarProceso2(longitud);  
+          }
           insertarProceso(longitud);
                     
           for (int i = 0; i < 32; i++) {
@@ -214,6 +251,7 @@ int main(int argc, char const *argv[]) {
         }else{
           cout << "\nProceso demasiado grande\n" << endl;
         }
+        
       break;
       case 2:
         mostrarLista();
