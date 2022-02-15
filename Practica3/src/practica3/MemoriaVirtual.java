@@ -1,14 +1,14 @@
 package practica3;
 
 public class MemoriaVirtual {
-    private int DireccionVirtual;
+    private String DireccionVirtual;
     private int TamanoPalabra;
     private int numeroBitsPagina1Nivel;
     private int numeroBitsPagina2Nivel;
     private int numeroBitsMarcoPagina;
     private int bitsReferida, bitsModificada, bitsPermisos, bitPresenteAusente;
 
-    public MemoriaVirtual(int DireccionVirtual, int TamanoPalabra, int numeroBitsPagina1Nivel, int numeroBitsPagina2Nivel, int numeroBitsMarcoPagina) {
+    public MemoriaVirtual(String DireccionVirtual, int TamanoPalabra, int numeroBitsPagina1Nivel, int numeroBitsPagina2Nivel, int numeroBitsMarcoPagina) {
         this.DireccionVirtual = DireccionVirtual;
         this.TamanoPalabra = TamanoPalabra;
         this.numeroBitsPagina1Nivel = numeroBitsPagina1Nivel;
@@ -16,11 +16,11 @@ public class MemoriaVirtual {
         this.numeroBitsMarcoPagina = numeroBitsMarcoPagina;
     }
 
-    public int getDireccionVirtual() {
+    public String getDireccionVirtual() {
         return DireccionVirtual;
     }
 
-    public void setDireccionVirtual(int DireccionVirtual) {
+    public void setDireccionVirtual(String DireccionVirtual) {
         this.DireccionVirtual = DireccionVirtual;
     }
 
