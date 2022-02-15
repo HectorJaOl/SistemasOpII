@@ -92,25 +92,34 @@ public class MemoriaVirtual {
        return (int) Math.pow(2, numeroBitsPagina1Nivel) * (int) Math.pow(2, numeroBitsPagina2Nivel);
        
     }
-    public int tamMemoriaFisica(){
+    public int numMarco(){
         int marcos = (int) Math.pow(2, numeroBitsMarcoPagina);
         marcos = marcos * tamPagina();
         return marcos;
     }
     public int tamPagina(){
         int desplazamiento;
-        desplazamiento = numeroBitsPagina1Nivel - numeroBitsPagina2Nivel;
+        desplazamiento = DireccionVirtual.length() - (numeroBitsPagina1Nivel + numeroBitsPagina2Nivel);
         desplazamiento = desplazamiento/TamanoPalabra;
         return (int) Math.pow(2, desplazamiento);
     }
 
-    public int convertirBytes(int bt){
-        
-        return 0;
+    public String convertirBytes(int bt){
+        String cnt_size;
+        double size_kb = bt /1024;
+        double size_mb = bt / 1024;
+        //double size_gb = bt / 1024 ;
+
+        if(size_mb > 0){
+            cnt_size = size_mb + " KB";
+        }else{
+            cnt_size = size_kb + " MB";
+        }  
+        return cnt_size;
     }
 
     @Override
     public String toString(){
-        return "Tam Memoria Virtual: "+"Tam Memoria Fisica"+"Tam de pagina: "+tamPagina();
+        return "Tam Memoria Virtual: "+convertirBytes((numPagina()*tamPagina()))+"\nTam Memoria Fisica: "+convertirBytes(numMarco())+"\nTam de pagina: "+tamPagina() + " bytes";
     }
 }
