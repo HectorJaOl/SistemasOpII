@@ -104,22 +104,30 @@ public class MemoriaVirtual {
         return (int) Math.pow(2, desplazamiento);
     }
 
-    public String convertirBytes(int bt){
-        String cnt_size;
-        double size_kb = bt /1024;
-        double size_mb = bt / 1024;
-        //double size_gb = bt / 1024 ;
-
-        if(size_mb > 0){
-            cnt_size = size_mb + " KB";
+    public String convertirBytes(long bt){
+        String prefijo;
+        double kb = bt/1024;
+        double mb = kb/1024;
+        double gb = mb/1024;
+       
+        if(gb >= 1){
+            prefijo = gb + " GB";
+        }else if(mb >= 1){
+            prefijo = mb + " MB";
+        }else if (kb >= 1){
+            prefijo = kb + " KB";
         }else{
-            cnt_size = size_kb + " MB";
-        }  
-        return cnt_size;
+            prefijo = bt + " bytes";
+        } 
+        return prefijo;
     }
 
     @Override
     public String toString(){
-        return "Tam Memoria Virtual: "+convertirBytes((numPagina()*tamPagina()))+"\nTam Memoria Fisica: "+convertirBytes(numMarco())+"\nTam de pagina: "+tamPagina() + " bytes";
+        long paginas = numPagina();
+        long bt = tamPagina();  
+        bt = bt * paginas;
+        
+        return "Tam Memoria Virtual: "+convertirBytes(bt)+"\nTam Memoria Fisica: "+convertirBytes(numMarco())+"\nTam de pagina: "+convertirBytes(tamPagina());
     }
 }
