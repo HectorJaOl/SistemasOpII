@@ -92,8 +92,10 @@ public class MemoriaVirtual {
        return (int) Math.pow(2, numeroBitsPagina1Nivel) * (int) Math.pow(2, numeroBitsPagina2Nivel);
        
     }
-    public void tamMemoriaFisica(){
-        
+    public int tamMemoriaFisica(){
+        int marcos = (int) Math.pow(2, numeroBitsMarcoPagina);
+        marcos = marcos * tamPagina();
+        return marcos;
     }
     public int tamPagina(){
         int desplazamiento;
@@ -101,6 +103,12 @@ public class MemoriaVirtual {
         desplazamiento = desplazamiento/TamanoPalabra;
         return (int) Math.pow(2, desplazamiento);
     }
+
+    public int convertirBytes(int bt){
+        
+        return 0;
+    }
+
     @Override
     public String toString(){
         return "Tam Memoria Virtual: "+"Tam Memoria Fisica"+"Tam de pagina: "+tamPagina();
