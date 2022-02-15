@@ -6,8 +6,10 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        MemoriaVirtual memoria = new MemoriaVirtual(10101001010101110, 1, 5, 4, 4);
-        int a = 10, opcion=0;
+        MemoriaVirtual memoria = new MemoriaVirtual("10101001010101110", 1, 5, 4, 4);
+        System.out.println(memoria.toString());
+        
+        /*int a = 10, opcion=0;
         switch (opcion) {
             case 1:
                 if (true) {
@@ -22,7 +24,7 @@ public class Main {
                 break;
             default:
                 throw new AssertionError();
-        }
+        }*/
     }
 
     
