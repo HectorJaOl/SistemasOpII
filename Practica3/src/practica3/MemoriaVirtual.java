@@ -101,6 +101,7 @@ public class MemoriaVirtual {
         desplazamiento = desplazamiento/TamanoPalabra;
         return (int) Math.pow(2, desplazamiento);
     }
+    @Override
     public String toString(){
         return "Tam Memoria Virtual: "+"Tam Memoria Fisica"+"Tam de pagina: "+tamPagina();
     }
