@@ -6,6 +6,7 @@ public class MemoriaVirtual {
     private int numeroBitsPagina1Nivel;
     private int numeroBitsPagina2Nivel;
     private int numeroBitsMarcoPagina;
+
     private int bitsReferida, bitsModificada, bitsPermisos, bitPresenteAusente;
 
     public MemoriaVirtual(String DireccionVirtual, int TamanoPalabra, int numeroBitsPagina1Nivel, int numeroBitsPagina2Nivel, int numeroBitsMarcoPagina) {
@@ -130,4 +131,10 @@ public class MemoriaVirtual {
         
         return "Tam Memoria Virtual: "+convertirBytes(bt)+"\nTam Memoria Fisica: "+convertirBytes(numMarco())+"\nTam de pagina: "+convertirBytes(tamPagina());
     }
+    /*
+    private int bitsReferida;
+    private int bitsModificada;
+    private int bitsPermisos;
+    private int bitPresenteAusente;
+    */
 }
