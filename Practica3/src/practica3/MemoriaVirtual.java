@@ -1,5 +1,6 @@
 package practica3;
 
+
 public class MemoriaVirtual {
     private String DireccionVirtual;
     private int TamanoPalabra;
@@ -9,7 +10,7 @@ public class MemoriaVirtual {
 
     private int bitsReferida, bitsModificada, bitsPermisos, bitPresenteAusente;
 
-    public MemoriaVirtual(String DireccionVirtual, int TamanoPalabra, int numeroBitsPagina1Nivel, int numeroBitsPagina2Nivel, int numeroBitsMarcoPagina) {
+    public MemoriaVirtual(String DireccionVirtual,int TamanoPalabra, int numeroBitsPagina1Nivel, int numeroBitsPagina2Nivel, int numeroBitsMarcoPagina) {
         this.DireccionVirtual = DireccionVirtual;
         this.TamanoPalabra = TamanoPalabra;
         this.numeroBitsPagina1Nivel = numeroBitsPagina1Nivel;
@@ -89,20 +90,44 @@ public class MemoriaVirtual {
         this.bitPresenteAusente = bitPresenteAusente;
     }
     
-    public int numPagina(){
-       return (int) Math.pow(2, numeroBitsPagina1Nivel) * (int) Math.pow(2, numeroBitsPagina2Nivel);
+    public int convertirBinarioDecimal() {
+        int decimal = 0;
+        int size = DireccionVirtual.length() - 1;
+        String[] split = DireccionVirtual.split("");
+        for (String split1 : split) {
+            if ("0".equals(split1)) {
+                size--;
+            } else {
+                decimal += (int) Math.pow(2, size);
+                //System.out.println("decimal = " + decimal);
+                size--;
+            }
+        }
+
+        return decimal;
+    }
+    
+    public String direccionFisica(){
+        int decimalVirtual = convertirBinarioDecimal();
+        long elevado = (long)Math.pow(2, numeroBitsPagina1Nivel)*(long)Math.pow(2, numeroBitsPagina2Nivel);
+        
+        decimalVirtual = (int) (decimalVirtual % elevado);
+        
+        return ""+Integer.toBinaryString(decimalVirtual);
+    }
+    
+    public long tamMemoriaV(){
+       return (long)Math.pow(2, numeroBitsPagina1Nivel)*(long)Math.pow(2, numeroBitsPagina2Nivel)*tamPagina();
        
     }
-    public int numMarco(){
-        int marcos = (int) Math.pow(2, numeroBitsMarcoPagina);
-        marcos = marcos * tamPagina();
-        return marcos;
+    public long tamMemoriaF(){
+        return (long) Math.pow(2, numeroBitsMarcoPagina)*tamPagina();
     }
-    public int tamPagina(){
+    public long tamPagina(){
         int desplazamiento;
         desplazamiento = DireccionVirtual.length() - (numeroBitsPagina1Nivel + numeroBitsPagina2Nivel);
-        desplazamiento = desplazamiento/TamanoPalabra;
-        return (int) Math.pow(2, desplazamiento);
+        desplazamiento = desplazamiento * TamanoPalabra;
+        return (long) Math.pow(2, desplazamiento);
     }
 
     public String convertirBytes(long bt){
@@ -124,17 +149,7 @@ public class MemoriaVirtual {
     }
 
     @Override
-    public String toString(){
-        long paginas = numPagina();
-        long bt = tamPagina();  
-        bt = bt * paginas;
-        
-        return "Tam Memoria Virtual: "+convertirBytes(bt)+"\nTam Memoria Fisica: "+convertirBytes(numMarco())+"\nTam de pagina: "+convertirBytes(tamPagina());
+    public String toString(){        
+        return "Tam Memoria Virtual: "+convertirBytes(tamMemoriaV())+"\nTam Memoria Fisica: "+convertirBytes(tamMemoriaF())+"\nTam de pagina: "+convertirBytes(tamPagina())+"\nDesplazamiento: "+direccionFisica();
     }
-    /*
-    private int bitsReferida;
-    private int bitsModificada;
-    private int bitsPermisos;
-    private int bitPresenteAusente;
-    */
 }
