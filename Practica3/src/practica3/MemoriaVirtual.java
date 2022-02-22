@@ -114,7 +114,7 @@ public class MemoriaVirtual {
         long desplazamiento = convertirBinarioDecimal() % tamPagina();
         int pag = (int) (convertirBinarioDecimal() / tamPagina());
 
-        long direccionFisica = (arreglo[pag] * tamPagina());
+        long direccionFisica = (arreglo[pag] % (long)Math.pow(2, numeroBitsMarcoPagina));
         
         return ""+Long.toBinaryString(direccionFisica)+""+Long.toBinaryString(desplazamiento);
     }
