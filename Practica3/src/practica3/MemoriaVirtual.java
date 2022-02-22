@@ -1,5 +1,7 @@
 package practica3;
 
+import static practica3.Main.arreglo;
+
 
 public class MemoriaVirtual {
     private String DireccionVirtual;
@@ -108,12 +110,13 @@ public class MemoriaVirtual {
     }
     
     public String direccionFisica(){
-        int decimalVirtual = convertirBinarioDecimal();
-        long elevado = (long)Math.pow(2, numeroBitsPagina1Nivel)*(long)Math.pow(2, numeroBitsPagina2Nivel);
         
-        decimalVirtual = (int) (decimalVirtual % elevado);
+        long desplazamiento = convertirBinarioDecimal() % tamPagina();
+        int pag = (int) (convertirBinarioDecimal() / tamPagina());
+
+        long direccionFisica = (arreglo[pag] * tamPagina());
         
-        return ""+Integer.toBinaryString(decimalVirtual);
+        return ""+Long.toBinaryString(direccionFisica)+""+Long.toBinaryString(desplazamiento);
     }
     
     public long tamMemoriaV(){
@@ -150,6 +153,6 @@ public class MemoriaVirtual {
 
     @Override
     public String toString(){        
-        return "Tam Memoria Virtual: "+convertirBytes(tamMemoriaV())+"\nTam Memoria Fisica: "+convertirBytes(tamMemoriaF())+"\nTam de pagina: "+convertirBytes(tamPagina())+"\nDesplazamiento: "+direccionFisica();
+        return "\nDirección fisica: "+direccionFisica()+"\nTam Memoria Virtual: "+convertirBytes(tamMemoriaV())+"\nTam Memoria Fisica: "+convertirBytes(tamMemoriaF())+"\nTam de pagina: "+convertirBytes(tamPagina());
     }
 }
