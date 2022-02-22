@@ -1,17 +1,19 @@
 package practica3;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileNotFoundException;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
 
-    static int tamDV;
+    static int tamDV, arreglo[] = new int[10000], j = 0;
     private static Scanner sn = new Scanner(System.in);
 
     public static int convertirBinarioDecimal(String binario) {
         int decimal = 0;
-        //"10101"
         int size = binario.length() - 1;
         tamDV = binario.length();
         String[] split = binario.split("");
@@ -29,10 +31,6 @@ public class Main {
         return decimal;
     }
 
-    public static boolean isFileEmpty(File file) {
-        return file.length() == 0;
-    }
-
     public static int menu() {
         int op;
 
@@ -45,21 +43,36 @@ public class Main {
         return op;
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void guardarArchivo() throws IOException {
+        String cadena;
+        FileReader f = new FileReader("prueba.txt");
+        BufferedReader b = new BufferedReader(f);
+        j = 0;
+        while ((cadena = b.readLine()) != null) {
+            System.out.println(cadena);
+            arreglo[j] = Integer.valueOf(cadena);
+            j++;
+        }
+        b.close();
+    }
+
+    public static void main(String[] args) throws FileNotFoundException, IOException {
         boolean datoCorrecto, cantidad;
         int tam;
+        int opcion;
+        int tamPalabra = 0, bitsPrimero = 0, bitsSegundo = 0, bitsMarco = 0;
+        boolean datos = false;
+        int n;
+
+        String linea;
+        int i, num;
 
         String direccionVirtual;
         //archivo tabla de pagina    
-
         Scanner leer = new Scanner(System.in);
-        File doc = new File("prueba.txt");
-        Scanner obj = new Scanner(doc);
+        //System.out.print("Linea: ");
+        //num = leer.nextInt();
 
-        int opcion;
-        int tamPalabra = 0, bitsPrimero = 0, bitsSegundo = 0, bitsMarco = 0;
-        
-        boolean datos = false;
         do {
             opcion = menu();
             switch (opcion) {
@@ -70,8 +83,8 @@ public class Main {
                             direccionVirtual = leer.nextLine();
                             datoCorrecto = direccionVirtual.matches("[0-1]*");
                         } while (!datoCorrecto);
-                        MemoriaVirtual memoria = new MemoriaVirtual(direccionVirtual,tamPalabra, bitsPrimero, bitsSegundo, bitsMarco);
-                        
+                        MemoriaVirtual memoria = new MemoriaVirtual(direccionVirtual, tamPalabra, bitsPrimero, bitsSegundo, bitsMarco);
+
                         System.out.println(memoria.toString());
                     } else {
                         System.out.println("\nAun no hay datos de entrada, proporcionalos\n");
@@ -95,9 +108,13 @@ public class Main {
                         System.out.println("Numero de bits Marco de Página: ");
                         bitsMarco = sn.nextInt();
 
-                        
-                    } while(bitsPrimero < 1 || bitsSegundo < 1 || bitsMarco < 1 || (bitsPrimero * bitsSegundo) <= bitsMarco );
+                    } while (bitsPrimero < 1 || bitsSegundo < 1 || bitsMarco < 1 || (bitsPrimero * bitsSegundo) <= bitsMarco);
                     datos = true;
+                    guardarArchivo();
+
+                    for (int k = 0; k < j; k++) {
+                        System.out.println("arreglo[k] = " + arreglo[k]);
+                    }
                 case 3: //Salir9
                     break;
                 default:
