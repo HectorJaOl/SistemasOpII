@@ -37,16 +37,16 @@ Nodo *crearNodo(char *nombreProceso, int numPaginas, int referencias)
 void insertarNodo(char *nombreProceso, int numPaginas, int referencias)
 {
     Nodo *nodo = crearNodo(nombreProceso, numPaginas, referencias);
-    if (cabeza == NULL)
+    if (cabeza == NULL){
         cabeza = nodo;
+    }
     else
     {
-        Nodo *puntero = cabeza;
+       Nodo *aux = cabeza;
 
-        while (puntero->siguiente)
-            puntero = puntero->siguiente;
-
-        puntero->siguiente = nodo;
+       while(aux->siguiente)
+        aux = aux->siguiente;
+       aux->siguiente = nodo;
     }
 }
 
@@ -97,57 +97,6 @@ int main()
 
     printf("Tamano Memoria Fisica en bytes: ");
     scanf("%d", &tamMemoriaFisica);
-
-    opcion = menu();
-    switch (opcion)
-    {
-    case 1:
-        printf("Nombre del proceso: \n");
-
-        setbuf(stdin, NULL);
-        scanf("%s", nombreProceso);
-
-        do
-        {
-            printf("Numero de Paginas: \n");
-            scanf("%d", &numPaginas);
-        } while (numPaginas < 1);
-
-        cont = 0;
-        do
-        {
-            do
-            {
-                printf("Numero Pagina: ");
-                scanf("%d", &numPag);
-
-                if (numPag > numPaginas)
-                {
-                    printf("\nPagina no disponible\n");
-                }
-
-            } while (numPag > numPaginas);
-
-            printf("Desaplazamiento: ");
-            scanf("%d", &desplazamiento);
-
-            // agregarMatriz(numPag,desplazamiento);
-            matriz[cont][0] = numPag;
-            matriz[cont][1] = desplazamiento;
-
-            cont++;
-            printf("Desea meter otro? [S/n]:    ");
-            setbuf(stdin, NULL);
-            scanf("%c", &termina);
-            if (termina == 78 || termina == 110)
-            {
-                break;
-            }
-        } while (1);
-        break;
-    case 2:
-        break;
-    }
 
     do
     {
@@ -208,12 +157,7 @@ int main()
         }
     } while (opcion != 3);
 
-    
-    
-    /*for (int i = 0; i < cont; i++)
-    {
-        printf("[%d][%d]--", matriz[i][0], matriz[i][1]);
-    }*/
+
 
     return 0;
 }
