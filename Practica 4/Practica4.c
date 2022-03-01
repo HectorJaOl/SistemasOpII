@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -214,6 +215,11 @@ int main()
     {
         printf("[%d][%d]--", matriz[i][0], matriz[i][1]);
     }*/
+=======
+#include<stdio.h>
+
+int main(){
+>>>>>>> Stashed changes
 
     return 0;
 }
