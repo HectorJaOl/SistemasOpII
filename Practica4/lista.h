@@ -135,6 +135,8 @@ void memorias()
 
 }
 
+// Devuelve la cantidad de procesos para que asi el 
+// despachador sepa cuantos hay
 int cantProcesos()
 {
 	return numProcesos;
