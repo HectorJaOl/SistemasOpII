@@ -91,9 +91,9 @@ void imprimirDatosProceso (struct Nodo* proceso)
 	printf ("Numero de Referencias: %d\n", proceso->numReferencias);
 }
 
-//Convierte las paginas y marcos a base 2 y 16 
-//Y agrega los 0's necesarios para llenar la 
-//Cantidad de bits que usan las direcciones
+// Convierte las paginas y marcos a base 2 y 16 
+// y agrega los 0's necesarios para llenar la 
+// cantidad de bits que usan las direcciones
 void convertir(int decimal, int mem, int base)
 {
 	int cociente,residuo,cont, i,j;
@@ -119,8 +119,8 @@ void convertir(int decimal, int mem, int base)
     printf(" ");
 }
 
-//Convierte el desplazamiento por separado
-//Porque aqui no hacen falta 0's
+// Convierte el desplazamiento por separado
+// porque aqui no hacen falta 0's
 void convertirDes(int decimal, int base)
 {
 	int cociente,residuo,cont, i,j;
@@ -141,9 +141,9 @@ void convertirDes(int decimal, int base)
     printf(" ");
 }
 
-//Convierte la cantidad de paginas de las 
-//Memorias a binario para sacar la cantidad
-//De bits necesarios
+// Convierte la cantidad de paginas de las 
+// memorias a binario para sacar la cantidad
+// de bits necesarios
 int convMem(int decimal, int base)
 {
 	int cont=0, cociente,residuo, i,j;
