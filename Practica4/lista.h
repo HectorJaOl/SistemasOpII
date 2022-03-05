@@ -71,6 +71,10 @@ void push(struct Nodo* proceso)
     }
 }
 
+/**
+ * Funcion que manda el primer nodo al final de
+ * la lista cuando se termina su cuantum
+ **/
 void pushLast (struct Nodo* proceso) {
     actual = cabeza;
 
