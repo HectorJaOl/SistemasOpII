@@ -10,15 +10,20 @@ struct Nodo
     int numReferencias;
 	int refRestantes;
 	int cuantumRestante;
-    int direccion[25][2];
+    int direccionV[25][2];
+	int direccionF[25][2];
     struct Nodo* siguiente;
 };
 
 struct Nodo* cabeza = NULL;
 struct Nodo* actual = NULL;
 
-int direccion[100][2];
 int numProcesos=0;
+int cont2=0;
+int pagMF=0, pagMV=0, k=0;
+int memoriaVirtual[100][2];
+int memoriaFisica[100][2];
+int tamPagina, tamMemoriaVirtual, tamMemoriaFisica;
 
 /**
  * Funcion que recibe un nodo el cual lo ordena dentro de
@@ -94,7 +99,6 @@ void pushLast (struct Nodo* proceso) {
  */
 void crearNodo(char *nombreProceso, int numPaginas, int numReferencias)
 {
-	int k=0;
     struct Nodo* nodo = malloc(sizeof(struct Nodo));
 
     strcpy(nodo->nombreProceso, nombreProceso);
@@ -103,14 +107,32 @@ void crearNodo(char *nombreProceso, int numPaginas, int numReferencias)
 	nodo->refRestantes = numReferencias;
 	for(int i=0;i<numReferencias;i++)
 	{
-		nodo->direccion[i][0]=direccion[k][0];
-		nodo->direccion[i][1]=direccion[k][1];
+		nodo->direccionV[i][0]=memoriaVirtual[k][0];
+		nodo->direccionV[i][1]=memoriaVirtual[k][1];
+		nodo->direccionF[i][0]=memoriaFisica[k][0];
+		nodo->direccionF[i][1]=memoriaFisica[k][1];
 		k++;
 	}
 	nodo->cuantumRestante = CUANTUM;
     nodo->siguiente = NULL;
 	numProcesos++;
 	push(nodo);
+}
+
+void memorias()
+{
+	printf("Tamano de Pagina en kilobytes: ");
+    scanf("%d", &tamPagina);
+
+    printf("Tamano Memoria Virtual en kilobytes: ");
+    scanf("%d", &tamMemoriaVirtual);
+
+    printf("Tamano Memoria Fisica en kilobytes: ");
+    scanf("%d", &tamMemoriaFisica);
+	
+	pagMV = tamMemoriaVirtual/tamPagina;
+	pagMF = tamMemoriaFisica/tamPagina;
+
 }
 
 int cantProcesos()
@@ -180,7 +202,7 @@ void liberaEspacio()
 void crearProceso()
 {
 	char nombreProceso[100], termina;
-    int numPaginas, numPag, desplazamiento, cont;
+    int numPaginas, numPag, desplazamiento, cont1;
 	
 	printf("Nombre del proceso: \n");
 	setbuf(stdin, NULL);
@@ -192,7 +214,7 @@ void crearProceso()
 		scanf("%d", &numPaginas);
 	} while (numPaginas < 1);
 	
-	cont = 0;
+	cont1 = 0;
 	do
 	{
 		do
@@ -206,14 +228,18 @@ void crearProceso()
 			}
 
 		} while (numPag > numPaginas);
-		
+
 		printf("Desplazamiento: ");
 		scanf("%d", &desplazamiento);
 		
-		direccion[cont][0]=numPag;
-		direccion[cont][1]=desplazamiento;
+		memoriaVirtual[cont2][0]=numPag;
+		memoriaVirtual[cont2][1]=desplazamiento;
+
+		memoriaFisica[cont2][0]=numPag;
+		memoriaFisica[cont2][1]=desplazamiento;
 		
-		cont++;
+		cont2++;
+		cont1++;
 		printf("Desea meter otro? [S/n]:    ");
 		setbuf(stdin, NULL);
 		scanf("%c", &termina);
@@ -222,5 +248,6 @@ void crearProceso()
 			break;
 		}
 	} while (1);
-	crearNodo(nombreProceso, numPaginas, cont);
+	crearNodo(nombreProceso, numPaginas, cont1);
 }
+
