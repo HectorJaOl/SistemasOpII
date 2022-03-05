@@ -71,10 +71,6 @@ void push(struct Nodo* proceso)
     }
 }
 
-/**
- * Funcion que manda el primer nodo al final de
- * la lista cuando se termina su cuantum
- **/
 void pushLast (struct Nodo* proceso) {
     actual = cabeza;
 
@@ -139,8 +135,6 @@ void memorias()
 
 }
 
-// Devuelve la cantidad de procesos para que asi el 
-// despachador sepa cuantos hay
 int cantProcesos()
 {
 	return numProcesos;
@@ -208,7 +202,7 @@ void liberaEspacio()
 void crearProceso()
 {
 	char nombreProceso[100], termina;
-    int numPaginas, numPag, desplazamiento, cont1;
+    int numPaginas, numPag, desplazamiento, cont1, ejemplo1, ejemplo2;
 	
 	printf("Nombre del proceso: \n");
 	setbuf(stdin, NULL);
@@ -238,10 +232,14 @@ void crearProceso()
 		printf("Desplazamiento: ");
 		scanf("%d", &desplazamiento);
 		
-		memoriaVirtual[cont2][0]=numPag;
+		ejemplo1=rand() % pagMV;
+		printf("ejemplo: %d", ejemplo1);
+		memoriaVirtual[cont2][0]=ejemplo1;
 		memoriaVirtual[cont2][1]=desplazamiento;
 
-		memoriaFisica[cont2][0]=numPag;
+		ejemplo2=rand() % pagMF;
+		printf("ejemplo: %d", ejemplo2);
+		memoriaFisica[cont2][0]=ejemplo2;
 		memoriaFisica[cont2][1]=desplazamiento;
 		
 		cont2++;
@@ -256,4 +254,3 @@ void crearProceso()
 	} while (1);
 	crearNodo(nombreProceso, numPaginas, cont1);
 }
-
